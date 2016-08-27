@@ -7,11 +7,11 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import SettingsMenu from '~/components/SettingsMenu';
+import SettingsMenu from '../components/SettingsMenu';
 
-import { calculatorPath, diaryPath } from '~/routes';
+import { calculatorPath, diaryPath } from '../routes';
 
-import '~/styles/styles.less';
+import '../styles/styles.less';
 
 class App extends Component {
 

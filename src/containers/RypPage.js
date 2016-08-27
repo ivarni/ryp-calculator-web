@@ -1,6 +1,6 @@
 import React from 'react';
 
-import RypForm from '~/containers/RypForm';
+import RypForm from './RypForm';
 
 function RypPage() {
     return (

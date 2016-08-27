@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router';
 
-import App from '~/containers/App';
-import RypPage from '~/containers/RypPage';
-import RypResult from '~/containers/RypResult';
+import App from './containers/App';
+import RypPage from './containers/RypPage';
+import RypResult from './containers/RypResult';
 
 export const calculatorPath = '/calculator';
 export const diaryPath = '/diary';

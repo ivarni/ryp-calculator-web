@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import RypDay from '~/components/RypDay';
+import RypDay from '../components/RypDay';
 
 class RypResult extends Component {
 

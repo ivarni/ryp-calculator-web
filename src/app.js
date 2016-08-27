@@ -5,9 +5,9 @@ import React from 'react';
 import { render } from 'react-dom';
 import { syncHistoryWithStore } from 'react-router-redux';
 
-import Root from '~/containers/Root';
+import Root from './containers/Root';
 
-import configureStore from '~/store/configureStore';
+import configureStore from './store/configureStore';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941

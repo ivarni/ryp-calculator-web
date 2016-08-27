@@ -9,7 +9,7 @@ import {
     labelEdit,
 } from 'ryp-calculator/lib/dispatchers';
 
-import RypField from '~/components/RypField';
+import RypField from '../components/RypField';
 
 class RypForm extends Component {
 

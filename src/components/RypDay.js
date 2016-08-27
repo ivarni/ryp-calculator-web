@@ -7,7 +7,7 @@ import {
     CardText,
 } from 'material-ui/Card';
 
-import formulas from '~/formula';
+import formulas from '../formula';
 
 function getDay(day, exercises) {
     const formula = formulas[day];
