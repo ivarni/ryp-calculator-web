@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import Paper from 'material-ui/Paper';
 import {
@@ -6,57 +6,61 @@ import {
     CardHeader,
     CardText,
 } from 'material-ui/Card';
+import { darkBlack } from 'material-ui/styles/colors';
 
-import formulas from '../formula';
+import RypExercise from './RypExercise';
 
-function getDay(day, exercises) {
-    const formula = formulas[day];
-    return exercises.map(exercise => ({
-        ...exercise,
-        value: (exercise.value * formula.multiplier).toFixed(1),
-        sets: formula.sets[exercise.name],
-    }));
-}
+class RypDay extends Component {
 
-function RypDay(props) {
-    const { day, exercises } = props;
-    const result = getDay(day, exercises);
-    const paperStyle = { margin: '25 0' };
-    const h2Style = {
-        color: 'rgba(0, 0, 0, 0.870588)',
-        boxSizing: 'border-box',
-        fontFamily: 'Roboto, sans-serif',
-        padding: 16,
-    };
+    constructor() {
+        super();
+        this.onFinished = this.onFinished.bind(this);
+    }
 
-    return (
-        <div>
-            <Paper style={paperStyle} zDepth={2}>
-                <h2 style={h2Style}>
-                    {`${formulas[day].title}`}
-                </h2>
-                {result.map(r => (
-                    <Card key={r.label}>
-                        <CardHeader
-                            title={`${r.label}, ${r.sets} sett`}
-                            subtitle={r.value}
+    onFinished(name) {
+        this.props.onFinished(this.props.index, name);
+    }
+
+    render() {
+        const { day } = this.props;
+
+        return (
+            <div>
+                <Paper style={paperStyle} zDepth={2}>
+                    <h2 style={h2Style}>
+                        {day[0].title}
+                    </h2>
+                    {day.map(exercise => (
+                        <RypExercise
+                            finished={exercise.finished}
+                            key={exercise.label}
+                            name={exercise.name}
+                            notes={exercise.notes}
+                            onFinished={this.onFinished}
+                            subtitle={exercise.value}
+                            title={`${exercise.label}, ${exercise.sets} sett`}
                         />
-                        { r.notes &&
-                            <CardText>
-                                { r.notes }
-                            </CardText>
-                        }
-                    </Card>
-                ))}
+                    ))}
 
-            </Paper>
-        </div>
-    );
+                </Paper>
+            </div>
+        );
+    }
 }
 
 RypDay.propTypes = {
-    exercises: PropTypes.array.isRequired,
-    day: PropTypes.number.isRequired,
+    day: PropTypes.array.isRequired,
+};
+
+const paperStyle = {
+    margin: '25 0'
+};
+
+const h2Style = {
+    color: darkBlack,
+    boxSizing: 'border-box',
+    fontFamily: 'Roboto, sans-serif',
+    padding: 16,
 };
 
 export default RypDay;

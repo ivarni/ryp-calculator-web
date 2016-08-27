@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import { onFinished } from 'ryp-calculator/lib/dispatchers';
+
 import RypDay from '../components/RypDay';
 
 class RypResult extends Component {
@@ -10,12 +12,13 @@ class RypResult extends Component {
         this.renderDay = this.renderDay.bind(this);
     }
 
-    renderDay(foo, day) {
+    renderDay(day, index) {
         return (
             <RypDay
-                key={day}
-                exercises={this.props.exercises}
+                key={index}
                 day={day}
+                index={index}
+                onFinished={this.props.onFinished}
             />
         );
     }
@@ -23,22 +26,22 @@ class RypResult extends Component {
     render() {
         return (
             <div>
-                {Array(18).fill(null).map(this.renderDay)}
+                {this.props.days.map(this.renderDay)}
             </div>
         );
     }
 }
 
 RypResult.propTypes = {
-    exercises: PropTypes.array.isRequired,
+    days: PropTypes.array.isRequired,
 };
 
 function mapStateToProps(state) {
     return {
-        exercises: state.exercises,
+        days: state.days,
     };
 }
 
 export default connect(mapStateToProps, {
-
+    onFinished,
 })(RypResult);
