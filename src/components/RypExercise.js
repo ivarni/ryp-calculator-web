@@ -9,6 +9,11 @@ import ClearIcon from 'material-ui/svg-icons/content/clear';
 import IconButton from 'material-ui/IconButton';
 import { darkBlack, lightBlack } from 'material-ui/styles/colors';
 
+const clearIconStyle = {
+    position: 'absolute',
+    right: 30,
+    top: 10,
+};
 
 class RypExercise extends Component {
 
@@ -27,7 +32,6 @@ class RypExercise extends Component {
             subtitle,
             notes,
             finished,
-            onFinished,
         } = this.props;
 
         const color = finished ? lightBlack : darkBlack;
@@ -59,10 +63,13 @@ class RypExercise extends Component {
 
 }
 
-const clearIconStyle = {
-    position: 'absolute',
-    right: 30,
-    top: 10,
-}
+RypExercise.propTypes = {
+    finished: PropTypes.bool.isRequired,
+    name: PropTypes.string.isRequired,
+    notes: PropTypes.string.isRequired,
+    onFinished: PropTypes.func.isRequired,
+    subtitle: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+};
 
 export default RypExercise;

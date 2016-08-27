@@ -37,7 +37,7 @@ class App extends Component {
     }
 
     render() {
-        const { state } = this.props;
+        const { state } = this.props;
 
         return (
             <MuiThemeProvider>
@@ -76,6 +76,7 @@ App.propTypes = {
     router: PropTypes.shape({
         push: PropTypes.func.isRequired,
     }).isRequired,
+    state: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -8,14 +8,14 @@ import { fullWhite } from 'material-ui/styles/colors';
 
 const iconButton = (
     <IconButton>
-        <MoreVertIcon color={fullWhite}/>
+        <MoreVertIcon color={fullWhite} />
     </IconButton>
 );
 
 const saveData = state => {
     const { exercises, days } = state;
     window.localStorage.setItem('ryp', JSON.stringify({ exercises, days }));
-}
+};
 
 function SettingsMenu(props) {
     return (
@@ -31,5 +31,9 @@ function SettingsMenu(props) {
         </IconMenu>
     );
 }
+
+SettingsMenu.propTypes = {
+    state: PropTypes.object.isRequired,
+};
 
 export default SettingsMenu;

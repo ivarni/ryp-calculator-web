@@ -25,7 +25,7 @@ class RypResult extends Component {
             .reverse()
             .findIndex(day => day && day.every(e => e.finished));
         const scrollTo = this[`_child-${lastFinished}`];
-        console.log(scrollTo)
+
         if (scrollTo) {
             setTimeout(() => scrollTo.scrollIntoView());
         }
@@ -38,7 +38,7 @@ class RypResult extends Component {
                 index={index}
                 key={index}
                 onFinished={this.props.onFinished}
-                ref={_child => this[`_child-${index}`] = _child}
+                ref={_child => { this[`_child-${index}`] = _child; }}
             />
         );
     }
@@ -54,6 +54,7 @@ class RypResult extends Component {
 
 RypResult.propTypes = {
     days: PropTypes.array.isRequired,
+    onFinished: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

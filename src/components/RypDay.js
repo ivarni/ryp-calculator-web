@@ -1,14 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 
 import Paper from 'material-ui/Paper';
-import {
-    Card,
-    CardHeader,
-    CardText,
-} from 'material-ui/Card';
 import { darkBlack } from 'material-ui/styles/colors';
 
 import RypExercise from './RypExercise';
+
+const paperStyle = {
+    margin: '25 0',
+};
+
+const h2Style = {
+    color: darkBlack,
+    boxSizing: 'border-box',
+    fontFamily: 'Roboto, sans-serif',
+    padding: 16,
+};
 
 class RypDay extends Component {
 
@@ -29,7 +35,7 @@ class RypDay extends Component {
         const { day } = this.props;
 
         return (
-            <div ref={_root => this._root = _root}>
+            <div ref={_root => { this._root = _root; }}>
                 <Paper style={paperStyle} zDepth={2}>
                     <h2 style={h2Style}>
                         {day[0].title}
@@ -54,17 +60,8 @@ class RypDay extends Component {
 
 RypDay.propTypes = {
     day: PropTypes.array.isRequired,
-};
-
-const paperStyle = {
-    margin: '25 0'
-};
-
-const h2Style = {
-    color: darkBlack,
-    boxSizing: 'border-box',
-    fontFamily: 'Roboto, sans-serif',
-    padding: 16,
+    index: PropTypes.number.isRequired,
+    onFinished: PropTypes.func.isRequired,
 };
 
 export default RypDay;
