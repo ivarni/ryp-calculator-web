@@ -21,11 +21,15 @@ class RypDay extends Component {
         this.props.onFinished(this.props.index, name);
     }
 
+    scrollIntoView() {
+        this._root.scrollIntoView();
+    }
+
     render() {
         const { day } = this.props;
 
         return (
-            <div>
+            <div ref={_root => this._root = _root}>
                 <Paper style={paperStyle} zDepth={2}>
                     <h2 style={h2Style}>
                         {day[0].title}

@@ -12,13 +12,24 @@ class RypResult extends Component {
         this.renderDay = this.renderDay.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        const lastFinished = 18 - Array.from(nextProps.days)
+            .reverse()
+            .findIndex(day => day && day.every(e => e.finished));
+        const scrollTo = this[`_child-${lastFinished + 1}`];
+        if (scrollTo) {
+            scrollTo.scrollIntoView();
+        }
+    }
+
     renderDay(day, index) {
         return (
             <RypDay
-                key={index}
                 day={day}
                 index={index}
+                key={index}
                 onFinished={this.props.onFinished}
+                ref={_child => this[`_child-${index}`] = _child}
             />
         );
     }
