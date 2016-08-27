@@ -8,7 +8,7 @@
     "heroku-postbuild": "npm run dist",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
-    "server": "NODE_ENV=production node server.js",
+    "server": "NODE_ENV=production nodemon server.js",
     "start": "hjs-dev-server"
   },
   "repository": {
@@ -30,6 +30,7 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-react-hmre": "^1.1.1",
     "css-loader": "^0.24.0",
+    "express-history-api-fallback": "^2.0.0",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "material-ui": "^0.15.4",
@@ -51,6 +52,7 @@
     "eslint-plugin-import": "^1.14.0",
     "eslint-plugin-jsx-a11y": "^2.2.0",
     "eslint-plugin-react": "^6.1.2",
-    "hjs-webpack": "^8.3.0"
+    "hjs-webpack": "^8.3.0",
+    "nodemon": "^1.10.2"
   }
 }
