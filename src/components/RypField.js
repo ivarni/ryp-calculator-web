@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
 
 import {
     Card,
@@ -53,14 +52,14 @@ class RypField extends Component {
     }
 
     onValueChange() {
-        const { name, value } = findDOMNode(this.refs.input).querySelector('input');
+        const { name, value } = this._input.input;
         this.props.onValueChange(name, value);
         this.onClose();
     }
 
     onLabelChange() {
-        const { name, value } = findDOMNode(this.refs.input).querySelector('input');
-        const { value: notes } = findDOMNode(this.refs.notes).querySelector('input');
+        const { name, value } = this._input.input;
+        const { value: notes } = this._notes.input;
         this.props.onLabelChange(name, value, notes);
         this.onClose();
     }
@@ -81,28 +80,28 @@ class RypField extends Component {
 
         const actions = [
             <FlatButton
-              label="Lagre"
-              primary
-              onTouchTap={editLabel ? this.onLabelChange : this.onValueChange}
+                label="Lagre"
+                primary
+                onTouchTap={editLabel ? this.onLabelChange : this.onValueChange}
             />,
             <FlatButton
-              label="Avbryt"
-              secondary
-              onTouchTap={this.onClose}
+                label="Avbryt"
+                secondary
+                onTouchTap={this.onClose}
             />,
         ];
 
         return (
             <div>
                 <Card
-                  expanded={expanded}
-                  onExpandChange={this.onExpandChange}
+                    expanded={expanded}
+                    onExpandChange={this.onExpandChange}
                 >
                     <CardHeader
-                      title={fieldLabel}
-                      subtitle={`${fieldValue} kg`}
-                      actAsExpander
-                      showExpandableButton
+                        title={fieldLabel}
+                        subtitle={`${fieldValue} kg`}
+                        actAsExpander
+                        showExpandableButton
                     />
                     {notes &&
                         <CardText expandable>
@@ -111,36 +110,36 @@ class RypField extends Component {
                     }
                     <CardActions expandable>
                         <FlatButton
-                          label="Endre vekt"
-                          onTouchTap={this.onEditValue}
-                          primary
+                            label="Endre vekt"
+                            onTouchTap={this.onEditValue}
+                            primary
                         />
                         <FlatButton
-                          label="Endre øvelse"
-                          onTouchTap={this.onEditLabel}
-                          secondary
+                            label="Endre øvelse"
+                            onTouchTap={this.onEditLabel}
+                            secondary
                         />
                     </CardActions>
                 </Card>
                 <Dialog
-                  actions={actions}
-                  modal={false}
-                  onRequestClose={this.onClose}
-                  open={editValue || editLabel}
-                  title={editLabel ? 'Endre øvelse' : 'Endre vekt'}
+                    actions={actions}
+                    modal={false}
+                    onRequestClose={this.onClose}
+                    open={editValue || editLabel}
+                    title={editLabel ? 'Endre øvelse' : 'Endre vekt'}
                 >
                     <TextField
-                      defaultValue={editLabel ? fieldLabel : (fieldValue || '')}
-                      id="input"
-                      name={fieldName}
-                      ref="input"
-                      type="tel"
+                        defaultValue={editLabel ? fieldLabel : (fieldValue || '')}
+                        id="input"
+                        name={fieldName}
+                        ref={_input => { this._input = _input; }}
+                        type="tel"
                     />
                     {editLabel &&
                         <TextField
-                          defaultValue={notes}
-                          floatingLabelText="Notater"
-                          ref="notes"
+                            defaultValue={notes}
+                            floatingLabelText="Notater"
+                            ref={_notes => { this._notes = _notes; }}
                         />
                     }
                 </Dialog>

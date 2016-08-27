@@ -10,8 +10,8 @@ export default function Root(props) {
     return (
         <Provider store={store}>
             <Router
-              history={history}
-              routes={routes}
+                history={history}
+                routes={routes}
             />
         </Provider>
     );

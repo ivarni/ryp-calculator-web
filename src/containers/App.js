@@ -1,21 +1,80 @@
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { withRouter } from 'react-router';
 
-import RypPage from '~/containers/RypPage';
+import AppBar from 'material-ui/AppBar';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+import SettingsMenu from '~/components/SettingsMenu';
+
+import { calculatorPath, diaryPath } from '~/routes';
 
 import '~/styles/styles.less';
 
-function App(props) {
-    return (
-        <MuiThemeProvider>
-            <div>
-                <RypPage />
-            </div>
-        </MuiThemeProvider>
-    );
+class App extends Component {
+
+    constructor() {
+        super();
+        this.state = { open: false };
+        this.openCalculator = this.openCalculator.bind(this);
+        this.openDiary = this.openDiary.bind(this);
+    }
+
+    openCalculator() {
+        this.setState({
+            open: false,
+        });
+        this.props.router.push(calculatorPath);
+    }
+
+    openDiary() {
+        this.setState({
+            open: false,
+        });
+        this.props.router.push(diaryPath);
+    }
+
+    render() {
+        return (
+            <MuiThemeProvider>
+                <div>
+                    <AppBar
+                        title="Treningskalkulator"
+                        iconElementRight={<SettingsMenu />}
+                        onLeftIconButtonTouchTap={
+                            () => this.setState({ open: true })
+                        }
+                    />
+                    <Drawer
+                        docked={false}
+                        width={200}
+                        open={this.state.open}
+                        onRequestChange={
+                            (open) => this.setState({ open })
+                        }
+                    >
+                        <MenuItem onTouchTap={this.openCalculator}>
+                            Kalkulator
+                        </MenuItem>
+                        <MenuItem onTouchTap={this.openDiary}>
+                            Dagbok
+                        </MenuItem>
+                    </Drawer>
+                    {this.props.children}
+                </div>
+            </MuiThemeProvider>
+        );
+    }
 }
+
+App.propTypes = {
+    children: PropTypes.node.isRequired,
+    router: PropTypes.shape({
+        push: PropTypes.func.isRequired,
+    }).isRequired,
+};
 
 function mapStateToProps(state) {
     return state;
@@ -23,4 +82,4 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
 
-})(App);
+})(withRouter(App));

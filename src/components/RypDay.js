@@ -36,7 +36,7 @@ function RypDay(props) {
                     {`${formulas[day].title}`}
                 </h2>
                 {result.map(r => (
-                    <Card>
+                    <Card key={r.label}>
                         <CardHeader
                             title={`${r.label}, ${r.sets} sett`}
                             subtitle={r.value}

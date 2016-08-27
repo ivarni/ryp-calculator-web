@@ -13,9 +13,9 @@ class RypResult extends Component {
     renderDay(foo, day) {
         return (
             <RypDay
-              key={day}
-              exercises={this.props.exercises}
-              day={day}
+                key={day}
+                exercises={this.props.exercises}
+                day={day}
             />
         );
     }

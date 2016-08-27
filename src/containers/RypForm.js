@@ -43,17 +43,17 @@ class RypForm extends Component {
     renderField(exercise) {
         return (
             <RypField
-              editLabel={this.onEditLabel}
-              editValue={this.onEditValue}
-              expanded={exercise.name === this.state.expanded}
-              fieldName={exercise.name}
-              fieldLabel={exercise.label}
-              fieldValue={exercise.value}
-              key={exercise.name}
-              onExpandChange={this.onExpandChange}
-              onValueChange={this.onValueChange}
-              onLabelChange={this.onLabelChange}
-              notes={exercise.notes}
+                editLabel={this.onEditLabel}
+                editValue={this.onEditValue}
+                expanded={exercise.name === this.state.expanded}
+                fieldName={exercise.name}
+                fieldLabel={exercise.label}
+                fieldValue={exercise.value}
+                key={exercise.name}
+                onExpandChange={this.onExpandChange}
+                onValueChange={this.onValueChange}
+                onLabelChange={this.onLabelChange}
+                notes={exercise.notes}
             />
         );
     }
