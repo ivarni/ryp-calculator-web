@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dist": "webpack",
+    "dist": "NODE_ENV=production webpack",
     "heroku-postbuild": "npm run dist",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
+    "server": "NODE_ENV=production node server.js",
     "start": "hjs-dev-server"
   },
   "repository": {
