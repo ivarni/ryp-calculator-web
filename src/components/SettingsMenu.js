@@ -12,16 +12,20 @@ const iconButton = (
     </IconButton>
 );
 
-function SettingsMenu() {
+const saveData = state =>
+    window.localStorage.setItem('ryp', JSON.stringify(state));
+
+function SettingsMenu(props) {
     return (
         <IconMenu
             iconButtonElement={iconButton}
             targetOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
         >
-            <MenuItem primaryText="Refresh" />
-            <MenuItem primaryText="Help" />
-            <MenuItem primaryText="Sign out" />
+            <MenuItem
+                primaryText="Save data"
+                onTouchTap={() => saveData(props.state)}
+            />
         </IconMenu>
     );
 }

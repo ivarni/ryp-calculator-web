@@ -37,12 +37,14 @@ class App extends Component {
     }
 
     render() {
+        const { state } = this.props;
+
         return (
             <MuiThemeProvider>
                 <div>
                     <AppBar
                         title="Treningskalkulator"
-                        iconElementRight={<SettingsMenu />}
+                        iconElementRight={<SettingsMenu state={state} />}
                         onLeftIconButtonTouchTap={
                             () => this.setState({ open: true })
                         }
@@ -77,7 +79,7 @@ App.propTypes = {
 };
 
 function mapStateToProps(state) {
-    return state;
+    return { state };
 }
 
 export default connect(mapStateToProps, {

@@ -16,7 +16,7 @@ class RypResult extends Component {
         const lastFinished = 18 - Array.from(nextProps.days)
             .reverse()
             .findIndex(day => day && day.every(e => e.finished));
-        const scrollTo = this[`_child-${lastFinished + 1}`];
+        const scrollTo = this[`_child-${lastFinished}`];
         if (scrollTo) {
             scrollTo.scrollIntoView();
         }
