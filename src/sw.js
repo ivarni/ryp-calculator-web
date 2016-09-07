@@ -11,6 +11,9 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
+    if (event.request.url.indexOf('localhost') !== -1) {
+        return;
+    }
     event.respondWith(
         caches.match(event.request)
             .then(response => {
@@ -22,9 +25,7 @@ self.addEventListener('fetch', event => {
                     .then(response => {
                         if (!response ||
                                 response.status !== 200 ||
-                                response.type !== 'basic' ||
-                                event.request.url.indexOf('webpack_hmr') !== -1 ||
-                                event.request.url.indexOf('hot-update') !== -1) {
+                                response.type !== 'basic') {
                             return response;
                         }
                         const responseToCache = response.clone();
