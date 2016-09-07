@@ -72,7 +72,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
     router: PropTypes.shape({
         push: PropTypes.func.isRequired,
     }).isRequired,

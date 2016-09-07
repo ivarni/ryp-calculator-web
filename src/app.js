@@ -4,6 +4,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import React from 'react';
 import { render } from 'react-dom';
 import { syncHistoryWithStore } from 'react-router-redux';
+import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 
 import Root from './containers/Root';
 
@@ -19,6 +20,10 @@ if (window.localStorage) {
     if (storedData) {
         preloadedState = JSON.parse(storedData);
     }
+}
+
+if ('serviceWorker' in navigator) {
+    const registration = runtime.register();
 }
 
 const store = configureStore(preloadedState);

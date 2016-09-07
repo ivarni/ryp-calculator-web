@@ -20,5 +20,3 @@ heroku config:set HEROKU_TOKEN="...." -a letsencrypt-app-for-ryp
 heroku addons:create scheduler:standard
 heroku run bin/sabayon -a letsencrypt-app-for-ryp
 ```
-
-https://github.com/dmathieu/sabayon#configuring-your-primary-application

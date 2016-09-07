@@ -1,5 +1,6 @@
 const path = require('path');
 const getConfig = require('hjs-webpack')
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 const config = getConfig({
     // entry point for the app
@@ -41,7 +42,8 @@ if (process.env.NODE_ENV !== 'production') {
     config.devtool = 'source-map';
 }
 
-config.resolve= { fallback: path.join(__dirname, "node_modules") },
-config.resolveLoader= { fallback: path.join(__dirname, "node_modules") }
+config.plugins.push(new ServiceWorkerWebpackPlugin({
+    entry: path.join(__dirname, 'src/sw.js'),
+}));
 
 module.exports = config;
