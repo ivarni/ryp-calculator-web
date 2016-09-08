@@ -14,11 +14,17 @@ const urlsToCache = [
 ];
 
 self.addEventListener('install', event => {
-console.log('install')
+    console.log('install');
     event.waitUntil(
         caches.open(cacheName)
             .then(cache => {
                 return cache.addAll(urlsToCache);
+            })
+            .then(() => {
+                if (self.skipWaiting) {
+                    return self.skipWaiting();
+                }
+                return;
             })
     );
 });
@@ -54,7 +60,7 @@ self.addEventListener('fetch', event => {
 
 self.addEventListener('activate', event => {
     const cacheWhitelist = [cacheName];
-console.log('activate')
+    console.log('activate');
 
     event.waitUntil(
         caches.keys()
@@ -68,5 +74,11 @@ console.log('activate')
                     })
                 )
             )
+            .then(() => {
+                if (self.clients && self.clients.claim) {
+                    return self.clients.claim();
+                }
+                return;
+            })
     );
 });
