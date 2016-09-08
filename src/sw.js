@@ -1,6 +1,6 @@
 const CACHE_NAME = 'ryp-cache-v1';
-let cacheName = new Date().getTime();
 
+let cacheName = new Date().getTime();
 const jsFileName = serviceWorkerOption.assets.find(a => a.endsWith('.js'));
 const match = jsFileName.match(/^.+\.(\w+)\.js$/);
 if (match && match[1]) {
@@ -11,6 +11,7 @@ const urlsToCache = [
     ...serviceWorkerOption.assets,
     '/calculator',
     '/diary',
+    '/',
 ];
 
 self.addEventListener('install', event => {
