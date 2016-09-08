@@ -38,7 +38,7 @@ class RypDay extends Component {
 
     onFinished(name) {
         this.props.onFinished(this.props.index, name);
-        this.handleToggle(false);
+        //this.handleToggle(false);
     }
 
     scrollIntoView() {
