@@ -1,9 +1,22 @@
 const CACHE_NAME = 'ryp-cache-v1';
-const urlsToCache = serviceWorkerOption.assets;
+let cacheName = new Date().getTime();
+
+const jsFileName = serviceWorkerOption.assets.find(a => a.endsWith('.js'));
+const match = jsFileName.match(/^.+\.(\w+)\.js$/);
+if (match && match[1]) {
+    cacheName = match[1];
+}
+
+const urlsToCache = [
+    ...serviceWorkerOption.assets,
+    '/calculator',
+    '/diary',
+];
 
 self.addEventListener('install', event => {
+console.log('install')
     event.waitUntil(
-        caches.open(CACHE_NAME)
+        caches.open(cacheName)
             .then(cache => {
                 return cache.addAll(urlsToCache);
             })
@@ -12,7 +25,7 @@ self.addEventListener('install', event => {
 
 self.addEventListener('fetch', event => {
     if (event.request.url.indexOf('localhost') !== -1) {
-        return;
+        //return;
     }
     event.respondWith(
         caches.match(event.request)
@@ -29,7 +42,7 @@ self.addEventListener('fetch', event => {
                             return response;
                         }
                         const responseToCache = response.clone();
-                        caches.open(CACHE_NAME)
+                        caches.open(cacheName)
                             .then(cache => {
                                 cache.put(event.request, responseToCache);
                             });
@@ -40,7 +53,8 @@ self.addEventListener('fetch', event => {
 });
 
 self.addEventListener('activate', event => {
-    const cacheWhitelist = [];
+    const cacheWhitelist = [cacheName];
+console.log('activate')
 
     event.waitUntil(
         caches.keys()
@@ -48,6 +62,7 @@ self.addEventListener('activate', event => {
                 Promise.all(
                     cacheNames.map(cacheName => {
                         if (cacheWhitelist.indexOf(cacheName) === -1) {
+                            console.log(`Deleting cache ${cacheName}`);
                             return caches.delete(cacheName);
                         }
                     })
