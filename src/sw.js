@@ -32,7 +32,7 @@ self.addEventListener('install', event => {
 
 self.addEventListener('fetch', event => {
     if (event.request.url.indexOf('localhost') !== -1) {
-        //return;
+        return;
     }
     event.respondWith(
         caches.match(event.request)

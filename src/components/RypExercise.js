@@ -7,6 +7,8 @@ import {
 } from 'material-ui/Card';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 import IconButton from 'material-ui/IconButton';
+import Paper from 'material-ui/Paper';
+
 import { darkBlack, lightBlack } from 'material-ui/styles/colors';
 
 const clearIconStyle = {
@@ -38,26 +40,44 @@ class RypExercise extends Component {
         const textDecoration = finished ? 'line-through' : 'none';
 
         return (
-            <Card>
-                <CardHeader
-                    title={title}
-                    titleColor={color}
-                    titleStyle={{ textDecoration }}
-                    subtitle={subtitle}
+            <div
+                style={{
+                    position: 'relative',
+                    borderBottom: `2px solid ${darkBlack}`,
+                    paddingBottom: 10,
+                }}
+            >
+                <h2
+                    style={{
+                        color,
+                        fontSize: 18,
+                        fontWeight: 400,
+                        textDecoration,
+                    }}
                 >
-                    <IconButton
-                        style={clearIconStyle}
-                        onTouchTap={this.onClear}
-                    >
-                        <ClearIcon color={color} />
-                    </IconButton>
-                </CardHeader>
+                    {title}
+                </h2>
+                <p
+                    style={{
+                        color,
+                        margin: 0,
+                        textDecoration,
+                    }}
+                >
+                    {subtitle} kg
+                </p>
+                <IconButton
+                    style={clearIconStyle}
+                    onTouchTap={this.onClear}
+                >
+                    <ClearIcon color={color} />
+                </IconButton>
                 { notes &&
-                    <CardText>
+                    <p>
                         { notes }
-                    </CardText>
+                    </p>
                 }
-            </Card>
+            </div>
         );
     }
 
