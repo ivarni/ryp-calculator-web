@@ -60,7 +60,7 @@ class RypDay extends Component {
                 <Card expanded={expanded} onExpandChange={this.handleToggle}>
                     <CardHeader
                         title={day[0].title}
-                        titleStyle={{color, textDecoration}}
+                        titleStyle={{...h2Style, color, textDecoration, fontSize: 20}}
                         actAsExpander={true}
                         showExpandableButton={true}
                     />
