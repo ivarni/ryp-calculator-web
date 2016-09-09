@@ -13,8 +13,8 @@ import { darkBlack, lightBlack } from 'material-ui/styles/colors';
 
 const clearIconStyle = {
     position: 'absolute',
-    right: 30,
-    top: 10,
+    right: 26,
+    top: 2,
 };
 
 class RypExercise extends Component {
@@ -45,6 +45,7 @@ class RypExercise extends Component {
                     position: 'relative',
                     borderBottom: `2px solid ${darkBlack}`,
                     paddingBottom: 10,
+                    paddingLeft: 36,
                 }}
             >
                 <h2
@@ -73,7 +74,7 @@ class RypExercise extends Component {
                     <ClearIcon color={color} />
                 </IconButton>
                 { notes &&
-                    <p>
+                    <p style={{ color, textDecoration }}>
                         { notes }
                     </p>
                 }
