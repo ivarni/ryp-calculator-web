@@ -1,6 +1,12 @@
-const CACHE_NAME = 'ryp-cache-v1';
+import 'babel-polyfill';
 
-let cacheName = new Date().getTime();
+const LOG = console.log || (f => f);
+const BLACKLISTED_URLS = [
+    'http://localhost:3000/__webpack_hmr',
+    'http://localhost:3000/app.js.map',
+];
+
+let cacheName = String(new Date().getTime());
 const jsFileName = serviceWorkerOption.assets.find(a => a.endsWith('.js'));
 const match = jsFileName.match(/^.+\.(\w+)\.js$/);
 if (match && match[1]) {
@@ -14,72 +20,66 @@ const urlsToCache = [
     '/',
 ];
 
-self.addEventListener('install', event => {
-    console.log('install');
-    event.waitUntil(
-        caches.open(cacheName)
-            .then(cache => {
-                return cache.addAll(urlsToCache);
-            })
-            .then(() => {
-                if (self.skipWaiting) {
-                    return self.skipWaiting();
-                }
-                return;
-            })
-    );
-});
+self.addEventListener('install', async function installSW(event) {
+    LOG('Installing serviceworker');
 
-self.addEventListener('fetch', event => {
-    if (event.request.url.indexOf('localhost') !== -1) {
-        return;
+    const cache = await caches.open(cacheName);
+    LOG(`Opened cache named ${cacheName}`);
+
+    await cache.addAll(urlsToCache);
+    LOG(`Cached urls: ${urlsToCache.join(' - ')}`);
+
+    if (self.skipWaiting) {
+        LOG('Skip waiting and activate immediately');
+        self.skipWaiting();
     }
-    event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                if (response) {
-                    return response;
-                }
-                const fetchRequest = event.request.clone();
-                return fetch(fetchRequest)
-                    .then(response => {
-                        if (!response ||
-                                response.status !== 200 ||
-                                response.type !== 'basic') {
-                            return response;
-                        }
-                        const responseToCache = response.clone();
-                        caches.open(cacheName)
-                            .then(cache => {
-                                cache.put(event.request, responseToCache);
-                            });
-                        return response;
-                    });
-        })
-    );
+    LOG('Finished installing serviceworker');
 });
 
-self.addEventListener('activate', event => {
-    const cacheWhitelist = [cacheName];
-    console.log('activate');
+self.addEventListener('activate', async function activateSW(event) {
+    LOG('Activating serviceworker');
 
-    event.waitUntil(
-        caches.keys()
-            .then(cacheNames =>
-                Promise.all(
-                    cacheNames.map(cacheName => {
-                        if (cacheWhitelist.indexOf(cacheName) === -1) {
-                            console.log(`Deleting cache ${cacheName}`);
-                            return caches.delete(cacheName);
-                        }
-                    })
-                )
-            )
-            .then(() => {
-                if (self.clients && self.clients.claim) {
-                    return self.clients.claim();
-                }
-                return;
-            })
-    );
+    const cacheNames = await caches.keys();
+    LOG(`Found caches named: ${cacheNames.join(',')}`);
+
+    await Promise.all(cacheNames.map(name => {
+        if (name !== cacheName) {
+            LOG(`Deleting cache named ${name}`)
+            return caches.delete(cacheName);
+        }
+        return Promise.resolve();
+    }));
+
+    if (self.clients && self.clients.claim) {
+        LOG('Claiming this worker as the active worker');
+        self.clients.claim();
+    }
+
+    LOG('Finished activating serviceworker');
+});
+
+
+self.addEventListener('fetch', async function fetchResource(event) {
+    const cachedResponse = await caches.match(event.request);
+    if (cachedResponse) {
+        LOG(`Returning ${event.request.url} from cache`);
+        return cachedResponse;
+    }
+
+    const clonedRequest = event.request.clone();
+    const liveResponse = await fetch(clonedRequest);
+    if (!liveResponse ||
+            liveResponse.status !== 200 ||
+            liveResponse.type !== 'basic' ||
+            BLACKLISTED_URLS.includes(event.request.url)) {
+        return liveResponse;
+    }
+
+    const clonedResponse = liveResponse.clone();
+    const cache = await caches.open(cacheName);
+    LOG(`Adding ${event.request.url} to cache ${cacheName}`);
+    cache.put(event.request, clonedResponse);
+    LOG(`Added ${event.request.url} to cache ${cacheName}`);
+
+    return liveResponse;
 });
