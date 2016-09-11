@@ -60,26 +60,13 @@ self.addEventListener('activate', async function activateSW(event) {
 
 
 self.addEventListener('fetch', async function fetchResource(event) {
-    const cachedResponse = await caches.match(event.request);
-    if (cachedResponse) {
-        LOG(`Returning ${event.request.url} from cache`);
-        return cachedResponse;
-    }
-
-    const clonedRequest = event.request.clone();
-    const liveResponse = await fetch(clonedRequest);
-    if (!liveResponse ||
-            liveResponse.status !== 200 ||
-            liveResponse.type !== 'basic' ||
-            BLACKLISTED_URLS.includes(event.request.url)) {
-        return liveResponse;
-    }
-
-    const clonedResponse = liveResponse.clone();
-    const cache = await caches.open(cacheName);
-    LOG(`Adding ${event.request.url} to cache ${cacheName}`);
-    cache.put(event.request, clonedResponse);
-    LOG(`Added ${event.request.url} to cache ${cacheName}`);
-
-    return liveResponse;
+    event.respondWith(new Promise(async function(resolve) {
+        const cachedResponse = await caches.match(event.request);
+        if (cachedResponse) {
+            LOG(`Returning ${event.request.url} from cache`);
+            resolve(cachedResponse);
+        }
+        const liveResponse = await fetch(event.request);
+        resolve(liveResponse);
+    }));
 });
