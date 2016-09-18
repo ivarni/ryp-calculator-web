@@ -133,7 +133,7 @@ class RypField extends Component {
                         id="input"
                         name={fieldName}
                         ref={_input => { this._input = _input; }}
-                        type="tel"
+                        type={`${editValue ? 'tel' : 'text'}`}
                     />
                     {editLabel &&
                         <TextField
