@@ -15,6 +15,8 @@ if (match && match[1]) {
 
 const urlsToCache = [
     ...serviceWorkerOption.assets,
+    '/fonts/roboto-v15-latin-regular.woff2',
+    '/fonts/roboto-v15-latin-500.woff2',
     '/calculator',
     '/diary',
     '/',
