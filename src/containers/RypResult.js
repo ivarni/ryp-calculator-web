@@ -53,7 +53,7 @@ class RypResult extends Component {
 }
 
 RypResult.propTypes = {
-    days: PropTypes.array.isRequired,
+    days: PropTypes.object.isRequired,
     onFinished: PropTypes.func.isRequired,
 };
 

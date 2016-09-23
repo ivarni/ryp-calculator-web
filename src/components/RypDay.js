@@ -59,7 +59,7 @@ class RypDay extends Component {
             <div ref={_root => { this._root = _root; }}>
                 <Card expanded={expanded} onExpandChange={this.handleToggle}>
                     <CardHeader
-                        title={day[0].title}
+                        title={day.get(0).title}
                         titleStyle={{...h2Style, color, textDecoration, fontSize: 20}}
                         actAsExpander={true}
                         showExpandableButton={true}
@@ -84,7 +84,7 @@ class RypDay extends Component {
 }
 
 RypDay.propTypes = {
-    day: PropTypes.array.isRequired,
+    day: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
     onFinished: PropTypes.func.isRequired,
 };
