@@ -54,7 +54,7 @@ class App extends Component {
                         width={200}
                         open={this.state.open}
                         onRequestChange={
-                            (open) => this.setState({ open })
+                            open => this.setState({ open })
                         }
                     >
                         <MenuItem onTouchTap={this.openCalculator}>

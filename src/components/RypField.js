@@ -132,14 +132,14 @@ class RypField extends Component {
                         defaultValue={editLabel ? fieldLabel : (fieldValue || '')}
                         id="input"
                         name={fieldName}
-                        ref={_input => { this._input = _input; }}
+                        ref={(_input) => { this._input = _input; }}
                         type={`${editValue ? 'tel' : 'text'}`}
                     />
                     {editLabel &&
                         <TextField
                             defaultValue={notes}
                             floatingLabelText="Notater"
-                            ref={_notes => { this._notes = _notes; }}
+                            ref={(_notes) => { this._notes = _notes; }}
                         />
                     }
                 </Dialog>

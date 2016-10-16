@@ -1,10 +1,9 @@
+/* global serviceWorkerOption */
 import 'babel-polyfill';
 
-const LOG = console.log || (f => f);
-const BLACKLISTED_URLS = [
-    'http://localhost:3000/__webpack_hmr',
-    'http://localhost:3000/app.js.map',
-];
+/* eslint-disable no-console */
+const log = console.log || (f => f);
+/* eslint-enable no-console */
 
 let cacheName = String(new Date().getTime());
 const jsFileName = serviceWorkerOption.assets.find(a => a.endsWith('.js'));
@@ -22,50 +21,50 @@ const urlsToCache = [
     '/',
 ];
 
-self.addEventListener('install', async function installSW(event) {
-    LOG('Installing serviceworker');
+self.addEventListener('install', async () => {
+    log('Installing serviceworker');
 
     const cache = await caches.open(cacheName);
-    LOG(`Opened cache named ${cacheName}`);
+    log(`Opened cache named ${cacheName}`);
 
     await cache.addAll(urlsToCache);
-    LOG(`Cached urls: ${urlsToCache.join(' - ')}`);
+    log(`Cached urls: ${urlsToCache.join(' - ')}`);
 
     if (self.skipWaiting) {
-        LOG('Skip waiting and activate immediately');
+        log('Skip waiting and activate immediately');
         self.skipWaiting();
     }
-    LOG('Finished installing serviceworker');
+    log('Finished installing serviceworker');
 });
 
-self.addEventListener('activate', async function activateSW(event) {
-    LOG('Activating serviceworker');
+self.addEventListener('activate', async () => {
+    log('Activating serviceworker');
 
     const cacheNames = await caches.keys();
-    LOG(`Found caches named: ${cacheNames.join(',')}`);
+    log(`Found caches named: ${cacheNames.join(',')}`);
 
-    await Promise.all(cacheNames.map(name => {
+    await Promise.all(cacheNames.map((name) => {
         if (name !== cacheName) {
-            LOG(`Deleting cache named ${name}`)
+            log(`Deleting cache named ${name}`);
             return caches.delete(cacheName);
         }
         return Promise.resolve();
     }));
 
     if (self.clients && self.clients.claim) {
-        LOG('Claiming this worker as the active worker');
+        log('Claiming this worker as the active worker');
         self.clients.claim();
     }
 
-    LOG('Finished activating serviceworker');
+    log('Finished activating serviceworker');
 });
 
 
-self.addEventListener('fetch', async function fetchResource(event) {
-    event.respondWith(new Promise(async function(resolve) {
+self.addEventListener('fetch', async (event) => {
+    event.respondWith(new Promise(async (resolve) => {
         const cachedResponse = await caches.match(event.request);
         if (cachedResponse) {
-            LOG(`Returning ${event.request.url} from cache`);
+            log(`Returning ${event.request.url} from cache`);
             resolve(cachedResponse);
         }
         const liveResponse = await fetch(event.request);

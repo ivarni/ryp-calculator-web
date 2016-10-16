@@ -12,7 +12,7 @@ const iconButton = (
     </IconButton>
 );
 
-const saveData = state => {
+const saveData = (state) => {
     const { exercises, days } = state;
     window.localStorage.setItem('ryp', JSON.stringify({ exercises, days }));
 };

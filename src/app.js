@@ -23,7 +23,7 @@ if (window.localStorage) {
 }
 
 if ('serviceWorker' in navigator) {
-    const registration = runtime.register();
+    runtime.register();
 }
 
 const store = configureStore(preloadedState);

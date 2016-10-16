@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import {
-    expandChange,
     fieldChange,
     fieldEdit,
     labelChange,
@@ -72,7 +71,6 @@ class RypForm extends Component {
 
 RypForm.propTypes = {
     exercises: PropTypes.object.isRequired,
-    expandChange: PropTypes.func.isRequired,
     fieldChange: PropTypes.func.isRequired,
     labelChange: PropTypes.func.isRequired,
 };
@@ -86,7 +84,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-    expandChange,
     fieldChange,
     fieldEdit,
     labelChange,

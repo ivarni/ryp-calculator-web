@@ -7,7 +7,8 @@ module.exports = {
         'import/no-extraneous-dependencies': [0],
         'react/jsx-filename-extension': [0],
         'react/jsx-indent': [2, 4],
-        'react/jsx-indent-props': [2, 4]
+        'react/jsx-indent-props': [2, 4],
+        'react/forbid-prop-types': [0]
     },
     'env': {
         'browser': true

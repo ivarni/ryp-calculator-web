@@ -1,13 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
-import {
-    Card,
-    CardHeader,
-    CardText,
-} from 'material-ui/Card';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 import IconButton from 'material-ui/IconButton';
-import Paper from 'material-ui/Paper';
 
 import { darkBlack, lightBlack } from 'material-ui/styles/colors';
 

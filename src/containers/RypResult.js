@@ -38,7 +38,7 @@ class RypResult extends Component {
                 index={index}
                 key={index}
                 onFinished={this.props.onFinished}
-                ref={_child => { this[`_child-${index}`] = _child; }}
+                ref={(_child) => { this[`_child-${index}`] = _child; }}
             />
         );
     }

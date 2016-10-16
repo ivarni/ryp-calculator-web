@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-import Paper from 'material-ui/Paper';
 import {
     Card,
     CardHeader,
@@ -9,10 +8,6 @@ import {
 import { darkBlack, lightBlack } from 'material-ui/styles/colors';
 
 import RypExercise from './RypExercise';
-
-const paperStyle = {
-    margin: '25 0',
-};
 
 const h2Style = {
     color: darkBlack,
@@ -32,13 +27,12 @@ class RypDay extends Component {
         };
     }
 
-    handleToggle(expanded) {
-        this.setState({ expanded });
-    };
-
     onFinished(name) {
         this.props.onFinished(this.props.index, name);
-        //this.handleToggle(false);
+    }
+
+    handleToggle(expanded) {
+        this.setState({ expanded });
     }
 
     scrollIntoView() {
@@ -48,7 +42,7 @@ class RypDay extends Component {
 
     render() {
         const { day } = this.props;
-        const { expanded } = this.state;
+        const { expanded } = this.state;
 
         const finished = day.every(exercise => exercise.finished);
 
@@ -56,15 +50,15 @@ class RypDay extends Component {
         const textDecoration = finished ? 'line-through' : 'none';
 
         return (
-            <div ref={_root => { this._root = _root; }}>
+            <div ref={(_root) => { this._root = _root; }}>
                 <Card expanded={expanded} onExpandChange={this.handleToggle}>
                     <CardHeader
                         title={day.get(0).title}
-                        titleStyle={{...h2Style, color, textDecoration, fontSize: 20}}
-                        actAsExpander={true}
-                        showExpandableButton={true}
+                        titleStyle={{ ...h2Style, color, textDecoration, fontSize: 20 }}
+                        actAsExpander
+                        showExpandableButton
                     />
-                    <CardText expandable={true}>
+                    <CardText expandable>
                         {day.map(exercise => (
                             <RypExercise
                                 finished={exercise.finished}
