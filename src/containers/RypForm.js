@@ -71,7 +71,7 @@ class RypForm extends Component {
 }
 
 RypForm.propTypes = {
-    exercises: PropTypes.array.isRequired,
+    exercises: PropTypes.object.isRequired,
     expandChange: PropTypes.func.isRequired,
     fieldChange: PropTypes.func.isRequired,
     labelChange: PropTypes.func.isRequired,
