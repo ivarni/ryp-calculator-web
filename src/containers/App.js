@@ -7,6 +7,8 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+import { hydrateStore } from 'ryp-calculator/lib/dispatchers';
+
 import SettingsMenu from '../components/SettingsMenu';
 
 import { calculatorPath, diaryPath } from '../routes';
@@ -20,6 +22,15 @@ class App extends Component {
         this.state = { open: false };
         this.openCalculator = this.openCalculator.bind(this);
         this.openDiary = this.openDiary.bind(this);
+    }
+
+    componentWillMount() {
+        if (window.localStorage) {
+            const storedData = window.localStorage.getItem('ryp');
+            if (storedData) {
+                this.props.hydrateStore(JSON.parse(storedData));
+            }
+        }
     }
 
     openCalculator() {
@@ -73,6 +84,7 @@ class App extends Component {
 
 App.propTypes = {
     children: PropTypes.node,
+    hydrateStore: PropTypes.func.isRequired,
     router: PropTypes.shape({
         push: PropTypes.func.isRequired,
     }).isRequired,
@@ -84,5 +96,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-
+    hydrateStore,
 })(withRouter(App));

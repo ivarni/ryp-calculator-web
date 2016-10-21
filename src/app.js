@@ -14,19 +14,11 @@ import configureStore from './store/configureStore';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-let preloadedState = {};
-if (window.localStorage) {
-    const storedData = window.localStorage.getItem('ryp');
-    if (storedData) {
-        preloadedState = JSON.parse(storedData);
-    }
-}
-
 if ('serviceWorker' in navigator) {
     runtime.register();
 }
 
-const store = configureStore(preloadedState);
+const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
 
 render(

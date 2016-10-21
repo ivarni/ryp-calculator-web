@@ -46,4 +46,8 @@ config.plugins.push(new ServiceWorkerWebpackPlugin({
     entry: path.join(__dirname, 'src/sw.js'),
 }));
 
+
+config.resolve = { fallback: path.join(__dirname, "node_modules") },
+config.resolveLoader = { fallback: path.join(__dirname, "node_modules") }
+
 module.exports = config;

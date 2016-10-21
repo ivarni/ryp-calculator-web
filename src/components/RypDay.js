@@ -1,38 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 
-import {
-    Card,
-    CardHeader,
-    CardText,
-} from 'material-ui/Card';
-import { darkBlack, lightBlack } from 'material-ui/styles/colors';
+import { CardText } from 'material-ui/Card';
 
 import RypExercise from './RypExercise';
-
-const h2Style = {
-    color: darkBlack,
-    boxSizing: 'border-box',
-    fontFamily: 'Roboto, sans-serif',
-    padding: 16,
-};
 
 class RypDay extends Component {
 
     constructor() {
         super();
         this.onFinished = this.onFinished.bind(this);
-        this.handleToggle = this.handleToggle.bind(this);
-        this.state = {
-            expanded: false,
-        };
     }
 
     onFinished(name) {
         this.props.onFinished(this.props.index, name);
-    }
-
-    handleToggle(expanded) {
-        this.setState({ expanded });
     }
 
     scrollIntoView() {
@@ -42,36 +22,22 @@ class RypDay extends Component {
 
     render() {
         const { day } = this.props;
-        const { expanded } = this.state;
-
-        const finished = day.every(exercise => exercise.finished);
-
-        const color = finished ? lightBlack : darkBlack;
-        const textDecoration = finished ? 'line-through' : 'none';
 
         return (
             <div ref={(_root) => { this._root = _root; }}>
-                <Card expanded={expanded} onExpandChange={this.handleToggle}>
-                    <CardHeader
-                        title={day.get(0).title}
-                        titleStyle={{ ...h2Style, color, textDecoration, fontSize: 20 }}
-                        actAsExpander
-                        showExpandableButton
-                    />
-                    <CardText expandable>
-                        {day.map(exercise => (
-                            <RypExercise
-                                finished={exercise.finished}
-                                key={exercise.label}
-                                name={exercise.name}
-                                notes={exercise.notes}
-                                onFinished={this.onFinished}
-                                subtitle={exercise.value}
-                                title={`${exercise.label}, ${exercise.sets} sett`}
-                            />
-                        ))}
-                    </CardText>
-                </Card>
+                <CardText>
+                    {day.map(exercise => (
+                        <RypExercise
+                            finished={exercise.finished}
+                            key={exercise.label}
+                            name={exercise.name}
+                            notes={exercise.notes}
+                            onFinished={this.onFinished}
+                            subtitle={exercise.value}
+                            title={`${exercise.label}, ${exercise.sets} sett`}
+                        />
+                    ))}
+                </CardText>
             </div>
         );
     }
