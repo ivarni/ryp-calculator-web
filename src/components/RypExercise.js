@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import ClearIcon from 'material-ui/svg-icons/content/clear';
+import ClearIcon from 'material-ui/svg-icons/action/done';
 import IconButton from 'material-ui/IconButton';
 
 import { darkBlack, lightBlack } from 'material-ui/styles/colors';

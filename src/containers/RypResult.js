@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 
 import { onFinished } from 'ryp-calculator/lib/dispatchers';
 
-import {
-    Card,
-    CardHeader,
-} from 'material-ui/Card';
+import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
+import { Card, CardHeader } from 'material-ui/Card';
 import { darkBlack, lightBlack } from 'material-ui/styles/colors';
+import NextDayIcon from 'material-ui/svg-icons/av/skip-next';
+import PreviousDayIcon from 'material-ui/svg-icons/av/skip-previous';
+import CurrentDayIcon from 'material-ui/svg-icons/action/home';
+
 
 import RypDay from '../components/RypDay';
 
@@ -30,8 +32,9 @@ class RypResult extends Component {
     constructor(props) {
         super(props);
         this.renderDay = this.renderDay.bind(this);
-        this.showNext = this.showNext.bind(this);
         this.showPrevious = this.showPrevious.bind(this);
+        this.showCurrent = this.showCurrent.bind(this);
+        this.showNext = this.showNext.bind(this);
 
         this.state = {
             visibleIndex: 0,
@@ -47,12 +50,28 @@ class RypResult extends Component {
     }
 
     showPrevious() {
+        const { visibleIndex } = this.state;
+
+        if (visibleIndex < 1) {
+            return;
+        }
+
         this.setState({
             visibleIndex: this.state.visibleIndex - 1,
         });
     }
 
+    showCurrent() {
+        this.componentWillMount();
+    }
+
     showNext() {
+        const { visibleIndex } = this.state;
+
+        if (visibleIndex > 16) {
+            return;
+        }
+
         this.setState({
             visibleIndex: this.state.visibleIndex + 1,
         });
@@ -64,24 +83,28 @@ class RypResult extends Component {
         const color = finished ? lightBlack : darkBlack;
         const textDecoration = finished ? 'line-through' : 'none';
 
+        const previousDayColor = index > 0 ? darkBlack : lightBlack;
+        const nextDayColor = index < 17 ? darkBlack : lightBlack;
+
         return (
             <Card>
-                {index > 0 &&
-                    <a
-                        href="#neste"
-                        onClick={this.showPrevious}
-                    >
-                        Forrige
-                    </a>
-                }
-                {index < 17 &&
-                    <a
-                        href="#forrige"
-                        onClick={this.showNext}
-                    >
-                        Neste
-                    </a>
-                }
+                <BottomNavigation>
+                    <BottomNavigationItem
+                        icon={<PreviousDayIcon color={previousDayColor} />}
+                        label="Forrige dag"
+                        onTouchTap={this.showPrevious}
+                    />
+                    <BottomNavigationItem
+                        icon={<CurrentDayIcon color={darkBlack} />}
+                        label="Dagen i dag"
+                        onTouchTap={this.showCurrent}
+                    />
+                    <BottomNavigationItem
+                        icon={<NextDayIcon color={nextDayColor} />}
+                        label="Neste dag"
+                        onTouchTap={this.showNext}
+                    />
+                </BottomNavigation>
                 <CardHeader
                     title={day.get(0).title}
                     titleStyle={{ ...h2Style, color, textDecoration, fontSize: 20 }}
