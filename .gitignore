@@ -4,3 +4,8 @@ ryp-calculator-web.sublime-workspace
 dist/*.js
 dist/*.html
 dist/*.css
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

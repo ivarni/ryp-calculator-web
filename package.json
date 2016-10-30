@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "hjs-dev-server",
     "dist": "NODE_ENV=production webpack",
     "heroku-postbuild": "npm run dist",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
+    "prestart": "npm run dist",
     "server": "NODE_ENV=production node server.js",
-    "start": "hjs-dev-server"
+    "start": "NODE_ENV=production node server.js"
   },
   "repository": {
     "type": "git",
