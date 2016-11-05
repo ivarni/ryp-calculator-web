@@ -1,6 +1,9 @@
+/* global GOOGLE_API_KEY:false, GOOGLE_OAUTH_CLIENT_ID:false */
+
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import scriptjs from 'scriptjs';
 
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
@@ -14,6 +17,15 @@ import SettingsMenu from '../components/SettingsMenu';
 import { calculatorPath, diaryPath } from '../routes';
 
 import '../styles/styles.less';
+
+const signInCallback = (signedIn) => {
+    if (signedIn) {
+        const authInstance = window.gapi.auth2.getAuthInstance();
+        const user = authInstance.currentUser.get();
+        const token = user.getAuthResponse().id_token;
+        console.log(token);
+    }
+};
 
 class App extends Component {
 
@@ -33,6 +45,22 @@ class App extends Component {
         }
     }
 
+    componentDidMount() {
+        scriptjs('https://apis.google.com/js/client.js', () => {
+            window.gapi.load('client', () => {
+                window.gapi.client.init({
+                    apiKey: GOOGLE_API_KEY,
+                    clientId: GOOGLE_OAUTH_CLIENT_ID,
+                    scope: 'email',
+                })
+                .then(() => window.gapi.auth2)
+                .then((auth2) => {
+                    auth2.getAuthInstance().isSignedIn.listen(signInCallback);
+                    signInCallback(auth2.getAuthInstance().isSignedIn.get());
+                });
+            });
+        });
+    }
     openCalculator() {
         this.setState({
             open: false,
